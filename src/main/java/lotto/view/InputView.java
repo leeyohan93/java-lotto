@@ -7,17 +7,26 @@ public class InputView {
     private static final String PRICE_REQUEST = "구입금액을 입력해 주세요.";
     private static final String WINNING_NUMBERS_REQUEST = "지난 주 당첨 번호를 입력해 주세요.";
     private static final String WINNING_NUMBERS_SEPARATOR = ", ";
+    private static final String BONUS_NUMBER_REQUEST = "보너스 볼을 입력해 주세요.";
 
     private Scanner scanner = new Scanner(System.in);
     private long price;
     private int[] winningNumbers;
+    private int bonusNumber;
 
     public void inputPrice() {
         price = receivePrice();
     }
 
-    public void inputWinningNumbers() {
+    public void inputWinningNumbersAndBonusNumber() {
         winningNumbers = receiveWinnerNumbers();
+        bonusNumber = receiveBonusNumber();
+    }
+
+    private int receiveBonusNumber() {
+        System.out.println(BONUS_NUMBER_REQUEST);
+        bonusNumber = scanner.nextInt();
+        return bonusNumber;
     }
 
     private long receivePrice() {
@@ -55,5 +64,9 @@ public class InputView {
 
     public int[] getWinningNumbers() {
         return winningNumbers;
+    }
+
+    public int getBonusNumber() {
+        return bonusNumber;
     }
 }
