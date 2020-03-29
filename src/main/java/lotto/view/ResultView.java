@@ -14,6 +14,7 @@ public class ResultView {
     private static final String LOTTO_TICKET_FORMAT = "[%d, %d, %d, %d, %d, %d]";
     private static final String WINNING_STATISTICS_TITLE = "당첨 통계\n---------";
     private static final String WINNING_STATISTICS_FORMAT = "%d개 일치 (%d원)- %d개";
+    private static final String WINNING_STATISTICS_BONUS_BALL_FORMAT = "%d개 일치, 보너스 볼 일치 (%d원)- %d개";
     private static final String WINNING_STATISTICS_PROFIT_RATE_FORMAT = "총 수익률은 %.2f 입니다.";
     private static final String RESULT_GOOD = "(기준이 1이기 때문에 결과적으로 이득이라는 의미임)";
     private static final String RESULT_SOSO = "(기준이 1이기 때문에 결과적으로 쌤쌤이라는 의미임)";
@@ -40,10 +41,14 @@ public class ResultView {
     }
 
     private void printWinningStatistics(List<Rank> winningResult, Rank winningValue) {
+        String format = WINNING_STATISTICS_FORMAT;
+        if (winningValue == Rank.SECOND) {
+            format = WINNING_STATISTICS_BONUS_BALL_FORMAT;
+        }
         long count = winningResult.stream()
                 .filter(value -> value == winningValue)
                 .count();
-        System.out.println(String.format(WINNING_STATISTICS_FORMAT,
+        System.out.println(String.format(format,
                 winningValue.getMatchCount(),
                 winningValue.getAmount(),
                 count));
