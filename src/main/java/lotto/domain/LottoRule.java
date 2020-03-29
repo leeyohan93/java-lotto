@@ -31,9 +31,10 @@ public class LottoRule {
 
     public enum WINNING_VALUE {
         FIRST(6, 2000000000),
-        SECOND(5, 1500000),
-        THIRD(4, 50000),
-        FOURTH(3, 5000);
+        SECOND(5, 30000000),
+        THIRD(5, 1500000),
+        FOURTH(4, 50000),
+        FIFTH(3, 5000);
 
         private int matchCount;
         private long amount;
@@ -43,8 +44,15 @@ public class LottoRule {
             this.amount = amount;
         }
 
-        public static WINNING_VALUE findByMatchCount(int matchCount) {
+        public static WINNING_VALUE findByLottoTicketResult(LottoTicketResult lottoTicketResult) {
+            int matchCount = lottoTicketResult.getMatchCount();
+            boolean bonusMatch = lottoTicketResult.isBonusMatch();
+
+            if (matchCount == SECOND.getMatchCount() && bonusMatch) {
+                return SECOND;
+            }
             return Arrays.stream(values())
+                    .filter(s -> bonusMatch)
                     .filter(s -> s.matchCount == matchCount)
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("당첨 되지 않았습니다."));
