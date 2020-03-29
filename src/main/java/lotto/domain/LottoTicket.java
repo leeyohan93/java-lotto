@@ -35,7 +35,7 @@ public class LottoTicket {
                 .collect(Collectors.toList());
     }
 
-    public LottoTicketResult checkWinning(LottoTicket winningTicket, LottoNumber bonusNumber) {
+    LottoTicketResult checkWinning(LottoTicket winningTicket, LottoNumber bonusNumber) {
         List<Integer> winningNumbers = winningTicket.getLottoNumbers();
         int matchCount = (int) winningNumbers.stream()
                 .filter(winningNumber -> getLottoNumbers()
