@@ -21,14 +21,16 @@ public class LottoController {
         ResultView resultView = new ResultView();
         resultView.printLottoTickets(lottoTickets);
 
-        inputView.inputWinningNumbers();
+        inputView.inputWinningNumbersAndBonusNumber();
 
         int[] winningNumbers = inputView.getWinningNumbers();
         List<LottoNumber> lottoNumbers = new ArrayList<>();
         for (int winningNumber : winningNumbers) {
             lottoNumbers.add(LottoNumber.of(winningNumber));
         }
-        BuyerResult buyerResult = buyer.getResult(new LottoTicket(lottoNumbers));
+        BuyerResult buyerResult = buyer.getResult(
+                new LottoTicket(lottoNumbers),
+                LottoNumber.of(inputView.getBonusNumber()));
 
         resultView.printWinningStatistics(buyerResult);
     }
