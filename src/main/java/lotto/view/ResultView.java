@@ -1,7 +1,7 @@
 package lotto.view;
 
 import lotto.domain.BuyerResult;
-import lotto.domain.LottoRule.WINNING_VALUE;
+import lotto.domain.LottoRule.Rank;
 import lotto.domain.LottoTicket;
 
 import java.util.Arrays;
@@ -30,8 +30,8 @@ public class ResultView {
 
     public void printWinningStatistics(BuyerResult buyerResult) {
         System.out.println(WINNING_STATISTICS_TITLE);
-        List<WINNING_VALUE> winningResult = buyerResult.getWinningResult();
-        Arrays.stream(WINNING_VALUE.values())
+        List<Rank> winningResult = buyerResult.getWinningResult();
+        Arrays.stream(Rank.values())
                 .forEach(winningValue -> printWinningStatistics(winningResult, winningValue));
 
         double profitRate = buyerResult.getProfitRate();
@@ -39,7 +39,7 @@ public class ResultView {
         printProfitRateDescription(profitRate);
     }
 
-    private void printWinningStatistics(List<WINNING_VALUE> winningResult, WINNING_VALUE winningValue) {
+    private void printWinningStatistics(List<Rank> winningResult, Rank winningValue) {
         long count = winningResult.stream()
                 .filter(value -> value == winningValue)
                 .count();

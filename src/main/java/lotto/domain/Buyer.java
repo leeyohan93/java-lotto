@@ -21,24 +21,24 @@ public class Buyer {
     }
 
     public BuyerResult getResult(LottoTicket winningTicket, LottoNumber bonusNumber) {
-        List<WINNING_VALUE> winningValues = getWinningValues(winningTicket, bonusNumber);
+        List<Rank> winningValues = getWinningValues(winningTicket, bonusNumber);
         return new BuyerResult(winningValues, getProfitRate(winningValues));
     }
 
-    private List<WINNING_VALUE> getWinningValues(LottoTicket winningTicket, LottoNumber bonusNumber) {
+    private List<Rank> getWinningValues(LottoTicket winningTicket, LottoNumber bonusNumber) {
         List<LottoTicketResult> winningLottoTicketResults = lottoTickets.stream()
                 .map(lottoTicket -> lottoTicket.checkWinning(winningTicket, bonusNumber))
                 .filter(result -> result.getMatchCount() >= getWinningMinCount())
                 .collect(Collectors.toList());
 
         return winningLottoTicketResults.stream()
-                .map(WINNING_VALUE::findByLottoTicketResult)
+                .map(Rank::findByLottoTicketResult)
                 .collect(Collectors.toList());
     }
 
-    private double getProfitRate(List<WINNING_VALUE> winningValues) {
+    private double getProfitRate(List<Rank> winningValues) {
         long winningAmountSum = winningValues.stream()
-                .mapToLong(WINNING_VALUE::getAmount)
+                .mapToLong(Rank::getAmount)
                 .sum();
         double profitRate = ((double) winningAmountSum) / (lottoTickets.size() * getPrice());
         return Math.round(profitRate * 100) / 100.0;

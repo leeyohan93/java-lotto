@@ -29,7 +29,7 @@ public class LottoRule {
         return WINNING_MIN_COUNT;
     }
 
-    public enum WINNING_VALUE {
+    public enum Rank {
         FIRST(6, 2000000000),
         SECOND(5, 30000000),
         THIRD(5, 1500000),
@@ -39,12 +39,12 @@ public class LottoRule {
         private int matchCount;
         private long amount;
 
-        WINNING_VALUE(int matchCount, long amount) {
+        Rank(int matchCount, long amount) {
             this.matchCount = matchCount;
             this.amount = amount;
         }
 
-        public static WINNING_VALUE findByLottoTicketResult(LottoTicketResult lottoTicketResult) {
+        public static Rank findByLottoTicketResult(LottoTicketResult lottoTicketResult) {
             int matchCount = lottoTicketResult.getMatchCount();
             boolean bonusMatch = lottoTicketResult.isBonusMatch();
 
