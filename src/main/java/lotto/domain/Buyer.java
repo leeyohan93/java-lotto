@@ -20,10 +20,20 @@ public class Buyer {
         return lottoTickets;
     }
 
-    public BuyerResult getResult(LottoTicket winningTicket) {
-        List<WINNING_VALUE> winningValues = getWinningValues(winningTicket);
-        double profitRate = getProfitRate(winningValues);
-        return new BuyerResult(winningValues, profitRate);
+    public BuyerResult getResult(LottoTicket winningTicket, LottoNumber bonusNumber) {
+        List<WINNING_VALUE> winningValues = getWinningValues(winningTicket, bonusNumber);
+        return new BuyerResult(winningValues, getProfitRate(winningValues));
+    }
+
+    private List<WINNING_VALUE> getWinningValues(LottoTicket winningTicket, LottoNumber bonusNumber) {
+        List<LottoTicketResult> winningLottoTicketResults = lottoTickets.stream()
+                .map(lottoTicket -> lottoTicket.checkWinning(winningTicket, bonusNumber))
+                .filter(result -> result.getMatchCount() >= getWinningMinCount())
+                .collect(Collectors.toList());
+
+        return winningLottoTicketResults.stream()
+                .map(WINNING_VALUE::findByLottoTicketResult)
+                .collect(Collectors.toList());
     }
 
     private double getProfitRate(List<WINNING_VALUE> winningValues) {
@@ -32,16 +42,5 @@ public class Buyer {
                 .sum();
         double profitRate = ((double) winningAmountSum) / (lottoTickets.size() * getPrice());
         return Math.round(profitRate * 100) / 100.0;
-    }
-
-    private List<WINNING_VALUE> getWinningValues(LottoTicket winningTicket) {
-        List<Integer> winningMatchCounts = lottoTickets.stream()
-                .map(lottoTicket -> lottoTicket.compareTo(winningTicket))
-                .filter(matchCount -> matchCount >= getWinningMinCount())
-                .collect(Collectors.toList());
-
-        return winningMatchCounts.stream()
-                .map(WINNING_VALUE::findByMatchCount)
-                .collect(Collectors.toList());
     }
 }
