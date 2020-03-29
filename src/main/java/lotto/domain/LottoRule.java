@@ -30,11 +30,11 @@ public class LottoRule {
     }
 
     public enum Rank {
-        FIRST(6, 2000000000),
-        SECOND(5, 30000000),
-        THIRD(5, 1500000),
+        FIFTH(3, 5000),
         FOURTH(4, 50000),
-        FIFTH(3, 5000);
+        THIRD(5, 1500000),
+        SECOND(5, 30000000),
+        FIRST(6, 2000000000);
 
         private int matchCount;
         private long amount;
@@ -52,9 +52,8 @@ public class LottoRule {
                 return SECOND;
             }
             return Arrays.stream(values())
-                    .filter(s -> bonusMatch)
                     .filter(s -> s.matchCount == matchCount)
-                    .findAny()
+                    .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("당첨 되지 않았습니다."));
         }
 
