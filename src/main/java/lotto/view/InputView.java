@@ -18,7 +18,10 @@ public class InputView {
     private static Scanner scanner = new Scanner(System.in);
 
     public static long inputPrice() {
-        return receivePrice();
+        System.out.println(PRICE_REQUEST);
+        long price = Long.parseLong(scanner.nextLine());
+        verifyPrice(price);
+        return price;
     }
 
     public static LottoTicketForms inputManualLotto() {
@@ -33,7 +36,10 @@ public class InputView {
     }
 
     public static int[] inputWinningNumbers() {
-        return receiveWinnerNumbers();
+        System.out.println(WINNING_NUMBERS_REQUEST);
+        String winningNumbersInput = scanner.nextLine();
+        verifyWinningNumbersInput(winningNumbersInput);
+        return getInts(winningNumbersInput);
     }
 
     public static int inputBonusNumber() {
@@ -41,24 +47,10 @@ public class InputView {
         return scanner.nextInt();
     }
 
-    private static long receivePrice() {
-        System.out.println(PRICE_REQUEST);
-        long price = Long.parseLong(scanner.nextLine());
-        verifyPrice(price);
-        return price;
-    }
-
     private static void verifyPrice(long participates) {
         if (participates < 0) {
             throw new IllegalArgumentException(String.format("가격은 음수(%d)를 입력할 수 없습니다.", participates));
         }
-    }
-
-    private static int[] receiveWinnerNumbers() {
-        System.out.println(WINNING_NUMBERS_REQUEST);
-        String winningNumbersInput = scanner.nextLine();
-        verifyWinningNumbersInput(winningNumbersInput);
-        return getInts(winningNumbersInput);
     }
 
     private static int[] getInts(String winningNumbersInput) {
