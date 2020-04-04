@@ -1,7 +1,7 @@
 package lotto.view;
 
-import lotto.domain.LottoTicketForm;
-import lotto.domain.LottoTicketForms;
+import lotto.dto.LottoTicketForm;
+import lotto.dto.LottoTicketForms;
 
 import java.util.ArrayList;
 import java.util.List;

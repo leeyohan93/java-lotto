@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import lotto.dto.LottoTicketForm;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +21,10 @@ public class LottoTicket {
     }
 
     static LottoTicket ofForm(LottoTicketForm lottoTicketForm) {
-        return new LottoTicket(lottoTicketForm.getLottoNumbers(), false);
+        List<Integer> lottoNumbers = lottoTicketForm.getLottoNumbers();
+        return new LottoTicket(LottoNumbers.of(lottoNumbers.stream()
+                .map(LottoNumber::of)
+                .collect(Collectors.toList())), false);
     }
 
     public LottoTicket(List<LottoNumber> lottoNumbers) {

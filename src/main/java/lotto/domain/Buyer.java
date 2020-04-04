@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import lotto.dto.LottoTicketForms;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
